@@ -19,8 +19,11 @@ class MainWC: NSWindowController {
     private let newPostItem = NSToolbarItem.Identifier("newPostItem")
     private let previewPostItem = NSToolbarItem.Identifier("previewPostItem")
 
+    private var controller: MainVC!
+
     convenience init() {
         self.init(windowNibName: "")
+        self.controller = MainVC()
     }
 
     override func loadWindow() {
@@ -36,7 +39,7 @@ class MainWC: NSWindowController {
         window.title = "Luddite"
         window.titleVisibility = .visible
         window.titlebarAppearsTransparent = false
-        window.contentViewController = MainVC()
+        window.contentViewController = self.controller
         window.isReleasedWhenClosed = false
         window.delegate = self
         window.setFrameAutosaveName(saveName)
@@ -56,11 +59,12 @@ class MainWC: NSWindowController {
     }
 
     @objc private func newButtonClicked(_ sender: NSButton) {
-        window?.contentViewController?.presentAsSheet(CreatePostVC())
+        controller.presentAsSheet(CreatePostVC())
     }
 
-    @objc private func previewButtonClicked(_ sender: NSButton) {
+    @objc func previewButtonClicked(_ sender: NSButton) {
         os_log("%{public}s", log: logger, "Preview button clicked, but does nothing.")
+        controller.showPreview()
     }
 }
 

@@ -8,6 +8,9 @@
 
 import Foundation
 import CoreData
+import os.log
+
+fileprivate let logger = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "Database")
 
 class Database {
 
@@ -18,6 +21,7 @@ class Database {
     }
 
     func commit() {
+        os_log("%{public}s", log: logger, "Requesting a commit of recent changes.")
         app.saveAction(nil)
     }
 

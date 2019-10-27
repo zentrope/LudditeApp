@@ -71,7 +71,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Core Data Saving and Undo support
 
     @IBAction func saveAction(_ sender: AnyObject?) {
-        os_log("%{public}s", log: logger, "saveAction")
         // Performs the save action for the application, which is to send the save: message to the application's managed object context. Any encountered errors are presented to the user.
         let context = persistentContainer.viewContext
 
@@ -82,6 +81,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if context.hasChanges {
             do {
                 try context.save()
+                os_log("%{public}s", log: logger, type: .debug, "Context saved some changes.")
             } catch {
                 // Customize this code block to include application-specific recovery steps.
                 let nserror = error as NSError
@@ -89,7 +89,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 NSApplication.shared.presentError(nserror)
             }
         } else {
-            os_log("%{public}s", log: logger, "Context has no changes.")
+            os_log("%{public}s", log: logger, type: .debug, "Context found no changes to commit.")
         }
     }
 

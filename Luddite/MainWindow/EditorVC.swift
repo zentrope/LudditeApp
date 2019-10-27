@@ -42,7 +42,6 @@ class EditorVC: NSViewController {
 extension EditorVC {
 
     override func loadView() {
-        let view = NSView(frame: .zero)
 
         statusBar.add(label: position, in: .leading)
         statusBar.add(label: stats, in: .trailing)
@@ -63,10 +62,9 @@ extension EditorVC {
         scrollView.hasVerticalScroller = true
         scrollView.borderType = .noBorder
 
-        view.bottom(subview: statusBar.view)
-        view.above(bottom: statusBar.view, subview: scrollView)
-
-        self.view = view
+        self.view = NSView(frame: .zero)
+            .bottom(subview: statusBar.view)
+            .above(bottom: statusBar.view, subview: scrollView)
     }
 
     override func viewDidLoad() {
@@ -83,6 +81,8 @@ extension EditorVC {
     override func viewWillDisappear() {
         super.viewWillDisappear()
         appearanceObservation = nil
+        os_log("%{public}s", log: logger, type: .debug, "View disappeared.")
+        Environment.database?.commit()
     }
 }
 

@@ -28,13 +28,12 @@ class SidebarVC: NSViewController {
     private var controller: NSFetchedResultsController<Post>?
 
     override func loadView() {
-        let view = NSView(frame: .zero)
         setupControlBar()
         setupScrollView()
-        view.bottom(subview: controlBar)
-        view.above(bottom: controlBar, subview: scrollView)
-        view.width(min: 200, max: 300)
-        self.view = view
+        self.view = NSView(frame: .zero)
+            .bottom(subview: controlBar)
+            .above(bottom: controlBar, subview: scrollView)
+            .width(min: 200, max: 300)
     }
 
     override func viewDidLoad() {
@@ -128,6 +127,7 @@ extension SidebarVC: NSTableViewDataSource {
 // MARK: - Sidebar Table View Delegate
 
 extension SidebarVC: NSTableViewDelegate {
+
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
 
         var cell: CellView
@@ -148,10 +148,11 @@ extension SidebarVC: NSTableViewDelegate {
         let row = tableView.selectedRow
         if row == -1 {
             owner?.setPost(nil)
+            return
         }
 
         let post = controller?.object(at: IndexPath(item: row, section: 0))
-        os_log("%{public}s", log: logger, "Setting post because selection did change.")
+        //os_log("%{public}s", log: logger, "Setting post because selection did change.")
         owner?.setPost(post)
     }
 }

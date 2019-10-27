@@ -10,11 +10,8 @@ import Cocoa
 
 extension NSView {
 
-    func fill(subview: NSView) {
-        fill(subview: subview, withMargins: 0)
-    }
-
-    func fill(subview: NSView, withMargins margin: CGFloat) {
+    @discardableResult
+    func fill(subview: NSView, withMargins margin: CGFloat = 0) -> Self {
         addSubview(subview)
         subview.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -23,18 +20,22 @@ extension NSView {
             subview.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -margin),
             subview.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin),
         ])
+        return self
     }
 
-    func center(subview: NSView) {
+    @discardableResult
+    func center(subview: NSView)  -> Self {
         addSubview(subview)
         subview.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             subview.centerXAnchor.constraint(equalTo: centerXAnchor),
             subview.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
+        return self
     }
 
-    func horizontal(subview: NSView, leading: CGFloat = 0, trailing: CGFloat = 0) {
+    @discardableResult
+    func horizontal(subview: NSView, leading: CGFloat = 0, trailing: CGFloat = 0)  -> Self {
         addSubview(subview)
         subview.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -42,13 +43,11 @@ extension NSView {
             subview.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leading),
             subview.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
+        return self
     }
 
-    func top(subview: NSView) {
-        top(subview: subview, withMargins: 0)
-    }
-
-    func top(subview: NSView, withMargins margin: CGFloat) {
+    @discardableResult
+    func top(subview: NSView, withMargins margin: CGFloat = 0)  -> Self {
         addSubview(subview)
         subview.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -56,9 +55,11 @@ extension NSView {
             subview.leadingAnchor.constraint(equalTo: leadingAnchor, constant: margin),
             subview.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -margin),
         ])
+        return self
     }
 
-    func above(bottom: NSView, subview: NSView, top: CGFloat = 0) {
+    @discardableResult
+    func above(bottom: NSView, subview: NSView, top: CGFloat = 0) -> Self  {
         addSubview(subview)
         subview.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -67,9 +68,11 @@ extension NSView {
             subview.bottomAnchor.constraint(equalTo: bottom.topAnchor),
             subview.topAnchor.constraint(equalTo: topAnchor, constant: top),
         ])
+        return self
     }
 
-    func bottom(subview: NSView, withMargins margin: CGFloat = 0) {
+    @discardableResult
+    func bottom(subview: NSView, withMargins margin: CGFloat = 0) -> Self  {
         addSubview(subview)
         subview.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -77,9 +80,11 @@ extension NSView {
             subview.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -margin),
             subview.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin),
         ])
+        return self
     }
 
-    func between(top: NSView, subview: NSView, bottom: NSView) {
+    @discardableResult
+    func between(top: NSView, subview: NSView, bottom: NSView) -> Self  {
         addSubview(subview)
         subview.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -88,30 +93,39 @@ extension NSView {
             subview.topAnchor.constraint(equalTo: top.bottomAnchor),
             subview.bottomAnchor.constraint(equalTo: bottom.topAnchor),
         ])
+        return self
     }
 
-    func minimum(width: CGFloat, height: CGFloat) {
+    @discardableResult
+    func minimum(width: CGFloat, height: CGFloat) -> Self  {
         heightAnchor.constraint(greaterThanOrEqualToConstant: height).isActive = true
         widthAnchor.constraint(greaterThanOrEqualToConstant: width).isActive = true
+        return self
     }
 
-    func height(_ value: CGFloat) {
+    @discardableResult
+    func height(_ value: CGFloat) -> Self  {
         assert(value > 0)
         heightAnchor.constraint(equalToConstant: value).isActive = true
+        return self
     }
 
-    func width(min: CGFloat, max: CGFloat = -1) {
+    @discardableResult
+    func width(min: CGFloat, max: CGFloat = -1) -> Self  {
         assert(min > 0)
         assert(max == -1 || max >= min)
         widthAnchor.constraint(greaterThanOrEqualToConstant: min).isActive = true
         if max >= min {
             widthAnchor.constraint(lessThanOrEqualToConstant: max).isActive = true
         }
+        return self
     }
 
-    func borderize() {
+    @discardableResult
+    func borderize(_ color: NSColor = .systemRed) -> Self {
         wantsLayer = true
-        layer?.borderColor = NSColor.systemRed.cgColor
+        layer?.borderColor = color.cgColor
         layer?.borderWidth = 1
+        return self
     }
 }

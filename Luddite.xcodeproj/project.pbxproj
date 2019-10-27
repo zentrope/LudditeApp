@@ -24,6 +24,11 @@
 		536D98A323641E4D0004AE3F /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D98A123641E4D0004AE3F /* Database.swift */; };
 		536D98A62364236B0004AE3F /* SidebarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D98A52364236B0004AE3F /* SidebarVC.swift */; };
 		5383BA522362C49F00391ECC /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5383BA512362C49F00391ECC /* CloudKit.framework */; };
+		53ED126123656FA100A807E5 /* EmptyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53ED126023656FA100A807E5 /* EmptyVC.swift */; };
+		53ED12632365720000A807E5 /* NSTextField+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53ED12622365720000A807E5 /* NSTextField+Ext.swift */; };
+		53ED126523657F7A00A807E5 /* PreviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53ED126423657F7A00A807E5 /* PreviewVC.swift */; };
+		53ED12682365857700A807E5 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 53ED12672365857700A807E5 /* style.css */; };
+		53ED126A23658B1200A807E5 /* ContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53ED126923658B1200A807E5 /* ContainerVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +52,11 @@
 		536D98A123641E4D0004AE3F /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		536D98A52364236B0004AE3F /* SidebarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarVC.swift; sourceTree = "<group>"; };
 		5383BA512362C49F00391ECC /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		53ED126023656FA100A807E5 /* EmptyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyVC.swift; sourceTree = "<group>"; };
+		53ED12622365720000A807E5 /* NSTextField+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+Ext.swift"; sourceTree = "<group>"; };
+		53ED126423657F7A00A807E5 /* PreviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewVC.swift; sourceTree = "<group>"; };
+		53ED12672365857700A807E5 /* style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
+		53ED126923658B1200A807E5 /* ContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +126,7 @@
 			children = (
 				5319B67E2359884000B62E2C /* NSColor+Ext.swift */,
 				5319B67A2359808000B62E2C /* NSImage+Ext.swift */,
+				53ED12622365720000A807E5 /* NSTextField+Ext.swift */,
 				536732CC235AF3B5009D50E4 /* NSTextView+Ext.swift */,
 				5319B6772359746200B62E2C /* NSView+Ext.swift */,
 			);
@@ -134,11 +145,15 @@
 		536D98A42364232E0004AE3F /* MainWindow */ = {
 			isa = PBXGroup;
 			children = (
+				53ED126923658B1200A807E5 /* ContainerVC.swift */,
 				531CCF152364C6E1005B7126 /* CreatePostVC.swift */,
 				531CCF162364C6E2005B7126 /* EditorVC.swift */,
+				53ED126023656FA100A807E5 /* EmptyVC.swift */,
 				5319B674235973F000B62E2C /* MainVC.swift */,
 				5319B672235973BA00B62E2C /* MainWC.swift */,
+				53ED126423657F7A00A807E5 /* PreviewVC.swift */,
 				536D98A52364236B0004AE3F /* SidebarVC.swift */,
+				53ED12662365855F00A807E5 /* Resources */,
 			);
 			path = MainWindow;
 			sourceTree = "<group>";
@@ -149,6 +164,14 @@
 				5383BA512362C49F00391ECC /* CloudKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		53ED12662365855F00A807E5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				53ED12672365857700A807E5 /* style.css */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,6 +233,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5319B6652359727600B62E2C /* Assets.xcassets in Resources */,
+				53ED12682365857700A807E5 /* style.css in Resources */,
 				5319B6682359727600B62E2C /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -227,10 +251,14 @@
 				5319B6602359727500B62E2C /* AppDelegate.swift in Sources */,
 				5319B675235973F000B62E2C /* MainVC.swift in Sources */,
 				5319B6782359746200B62E2C /* NSView+Ext.swift in Sources */,
+				53ED12632365720000A807E5 /* NSTextField+Ext.swift in Sources */,
+				53ED126523657F7A00A807E5 /* PreviewVC.swift in Sources */,
 				5319B673235973BA00B62E2C /* MainWC.swift in Sources */,
 				536732CD235AF3B5009D50E4 /* NSTextView+Ext.swift in Sources */,
 				5319B67D235983A500B62E2C /* ToolBarVC.swift in Sources */,
 				5319B67B2359808000B62E2C /* NSImage+Ext.swift in Sources */,
+				53ED126A23658B1200A807E5 /* ContainerVC.swift in Sources */,
+				53ED126123656FA100A807E5 /* EmptyVC.swift in Sources */,
 				536D98A62364236B0004AE3F /* SidebarVC.swift in Sources */,
 				5319B6632359727500B62E2C /* Luddite.xcdatamodeld in Sources */,
 				536D98A223641E4D0004AE3F /* Environment.swift in Sources */,

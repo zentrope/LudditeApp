@@ -1,0 +1,36 @@
+:root {
+    color-scheme: light dark;
+    --fg-color: black;
+    --bg-color: white;
+    --link-color: #369;
+}
+
+html, body {
+    font-family: system, -apple-system, BlinkMacSystemFont, HelveticaNeue, LucidaGrande, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--fg-color);
+}
+
+main {
+    margin: auto;
+    width: 666px;
+}
+
+a {
+    text-decoration: none;
+    color: var(--link-color);
+}
+
+p {
+    line-height: 1.5;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --link-color: dodgerblue;
+        --bg-color: #161716;
+        --fg-color: #ccc;
+    }
+}
