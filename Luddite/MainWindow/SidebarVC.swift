@@ -17,9 +17,6 @@ class SidebarVC: NSViewController {
 
     weak var owner: MainVC?
 
-    private let searchField = NSSearchField()
-    private let controlBar = NSStackView()
-
     private let scrollView = NSScrollView()
     private let tableView = NSTableView()
 
@@ -28,11 +25,9 @@ class SidebarVC: NSViewController {
     private var controller: NSFetchedResultsController<Post>?
 
     override func loadView() {
-        setupControlBar()
         setupScrollView()
         self.view = NSView(frame: .zero)
-            .bottom(subview: controlBar)
-            .above(bottom: controlBar, subview: scrollView)
+            .fill(subview: scrollView)
             .width(min: 200, max: 300)
     }
 
@@ -45,22 +40,6 @@ class SidebarVC: NSViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.reloadData()
-    }
-
-    private func setupControlBar() {
-        searchField.placeholderString = "Filter"
-        searchField.controlSize = .small
-        searchField.focusRingType = .none
-        searchField.controlSize = .small
-        searchField.font = NSFont.systemFont(ofSize: NSFont.systemFontSize(for: .small))
-
-        controlBar.orientation = .horizontal
-        controlBar.distribution = .gravityAreas
-        controlBar.alignment = .centerY
-        controlBar.addView(searchField, in: .leading)
-        controlBar.edgeInsets = NSEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
-        controlBar.spacing = 8
-        controlBar.height(24)
     }
 
     private func setupScrollView() {
@@ -97,7 +76,7 @@ extension SidebarVC: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
 
         // Problem: user types a character, gets saved to the managed object, which then
-        // gnerates a change causing this method to be invoked and the whole table to
+        // generates a change causing this method to be invoked and the whole table to
         // be updated. The selection then causes a selectionDidChange even which attempts
         // to set the editor to the "new" content. Where do we avoid this issue?
         let selected = tableView.selectedRowIndexes
@@ -107,7 +86,7 @@ extension SidebarVC: NSFetchedResultsControllerDelegate {
 }
 
 
-// MARK: - Sidebar Table View Data Source
+// MARK: - NSTableViewDataSource
 
 extension SidebarVC: NSTableViewDataSource {
 
@@ -124,7 +103,7 @@ extension SidebarVC: NSTableViewDataSource {
     }
 }
 
-// MARK: - Sidebar Table View Delegate
+// MARK: - NSTableViewDelegate
 
 extension SidebarVC: NSTableViewDelegate {
 
