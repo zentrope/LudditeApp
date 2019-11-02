@@ -36,8 +36,7 @@ class MainWC: NSWindowController {
         super.windowDidLoad()
         guard let window = window else { return }
         setupToolbar()
-        window.title = "Luddite"
-        window.titleVisibility = .visible
+        window.titleVisibility = .hidden
         window.titlebarAppearsTransparent = false
         window.contentViewController = self.controller
         window.isReleasedWhenClosed = false
@@ -63,7 +62,6 @@ class MainWC: NSWindowController {
     }
 
     @objc func previewButtonClicked(_ sender: NSButton) {
-        os_log("%{public}s", log: logger, "Preview button clicked, but does nothing.")
         controller.showPreview()
     }
 }

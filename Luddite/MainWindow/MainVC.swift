@@ -37,15 +37,6 @@ class MainVC: NSViewController {
 
     func setPost(_ post: Post?) {
         container.post = post
-
-        guard let window = view.window else { return }
-        let title = post?.title ?? "Luddite"
-        var date = ""
-        if let text = post?.dateCreated {
-            date = " • \(text)"
-        }
-
-        window.title = "\(title)\(date)"
     }
 }
 
