@@ -90,8 +90,8 @@ final class ContainerVC: NSViewController {
     }
 
     private func showEmpty() {
-        guard let current = currentViewController else { print("no current controller") ; return }
-        guard current != empty else { print("empty already showing") ; return }
+        guard let current = currentViewController else { return }
+        guard current != empty else { return }
         transition(from: current, to: empty, options: []) {
             self.currentViewController = self.empty
             self.empty.view.superview?.fill(subview: self.empty.view)

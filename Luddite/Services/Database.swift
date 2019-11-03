@@ -33,27 +33,15 @@ class Database {
             post.dateCreated = Date()
             post.title = title
             post.content = "<h1>\(title)</h1>\n\n<p>When you're thinking about '\(title)' the other day...</p>"
+            post.isDraft = true
             self.app.saveAction(self)
-        }
-    }
-
-    func fetchPosts(_ completion: @escaping (Result<[Post],Error>) -> Void) {
-        let context = app.persistentContainer.viewContext
-        context.perform {
-            do {
-                let request: NSFetchRequest<Post> = Post.fetchRequest()
-                let posts = try context.fetch(request)
-                completion(Result.success(posts))
-            } catch {
-                completion(Result.failure(error))
-            }
         }
     }
 
     func getPostController() -> NSFetchedResultsController<Post> {
         let context = app.persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<Post> = Post.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateCreated", ascending: false)]
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         do {
             try controller.performFetch()

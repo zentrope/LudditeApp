@@ -13,7 +13,7 @@ class EmptyVC: NSViewController {
     override func loadView() {
 
         let label = NSTextField(labelWithString: "No Post Selected")
-            .font(NSFont.systemFont(ofSize: 16, weight: .semibold))
+            .font(NSFont.systemFont(ofSize: 22, weight: .regular))
             .textColor(.secondaryLabelColor)
 
         self.view = NSView(frame: .zero)

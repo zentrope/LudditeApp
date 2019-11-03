@@ -195,6 +195,9 @@ extension EditorVC: NSTextViewDelegate {
 
     func textDidEndEditing(_ notification: Notification) {
         post?.content = textView.string
+        if post?.isDraft == nil {
+            post?.isDraft = true
+        }
         Environment.database?.commit()
     }
 
