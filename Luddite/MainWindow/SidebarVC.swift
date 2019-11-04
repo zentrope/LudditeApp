@@ -150,6 +150,10 @@ extension SidebarVC: NSOutlineViewDelegate {
         return item is Outline.Header
     }
 
+    func outlineView(_ outlineView: NSOutlineView, shouldSelectItem item: Any) -> Bool {
+        return !(item is Outline.Header)
+    }
+
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
         switch item {
             case let header as Outline.Header:
