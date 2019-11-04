@@ -3,6 +3,7 @@
     --fg-color: black;
     --bg-color: white;
     --link-color: #369;
+    --header-color: dodgerblue;
 }
 
 html, body {
@@ -18,13 +19,21 @@ main {
     width: 666px;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    color: var(--header-color);
+}
+
 a {
     text-decoration: none;
     color: var(--link-color);
 }
 
-p {
-    line-height: 1.5;
+p, li {
+    line-height: 1.5em;
+}
+
+li {
+    margin-bottom: 1em;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -32,5 +41,6 @@ p {
         --link-color: dodgerblue;
         --bg-color: #161716;
         --fg-color: #ccc;
+        --header-color: peru;
     }
 }
