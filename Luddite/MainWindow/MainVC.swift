@@ -32,11 +32,13 @@ class MainVC: NSViewController {
     }
 
     func showPreview() {
-        container.showPreview()
+        //container.showEditor()
+        container.toggleEditorPreview()
     }
 
     func setPost(_ post: Post?) {
-        container.post = post
+        //container.post = post
+        container.set(post: post)
     }
 }
 

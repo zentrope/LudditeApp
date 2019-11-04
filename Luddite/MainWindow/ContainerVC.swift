@@ -18,12 +18,7 @@ final class ContainerVC: NSViewController {
     private lazy var preview = PreviewVC()
 
     private var currentViewController: NSViewController?
-
-    var post: Post? {
-        didSet {
-            updateView()
-        }
-    }
+    private var post: Post?
 
     override func loadView() {
         self.view = NSView(frame: .zero)
@@ -38,60 +33,51 @@ final class ContainerVC: NSViewController {
         currentViewController = empty
     }
 
-    private func updateView() {
+    func set(post: Post?) {
+        let prev = self.post
+        self.post = post
         if post == nil {
-            os_log("%{public}s", log: logger, type: .debug, "Post is nil, showing empty view")
             showEmpty()
-            return
-        }
-
-        if post != nil && currentViewController == empty {
+        } else if post?.id != prev?.id {
             showPreview()
-            return
-        }
-
-        if post != nil && currentViewController == editor {
-            editor.setPost(post)
-            return
-        }
-
-        if post != nil && currentViewController == preview {
+        } else if currentViewController == preview {
             preview.load(post?.content)
+        } else if currentViewController == editor {
+            editor.setPost(post)
         }
     }
 
-    /// FIXME: These show methods can be generic.
-    func showPreview() {
-        if currentViewController == preview {
-            showEditor()
+    func toggleEditorPreview() {
+        if currentViewController == empty {
             return
         }
-        preview.load(post?.content)
-        guard let current = currentViewController else { return }
-        guard preview.view.superview != self.view else { return }
-        transition(from: current, to: preview, options: []) {
-            self.currentViewController = self.preview
-            self.preview.view.superview?.fill(subview: self.preview.view)
+        if currentViewController == preview {
+            showEditor()
+        } else {
+            showPreview()
         }
+    }
+
+    private func showPreview() {
+        preview.load(post?.content)
+        transition(to: preview)
     }
 
     private func showEditor() {
-        guard let current = currentViewController else { return }
         editor.setPost(post)
-        if current != editor {
-            transition(from: current, to: editor, options: []) {
-                self.currentViewController = self.editor
-                self.editor.view.superview?.fill(subview: self.editor.view)
-            }
-        }
+        transition(to: editor)
     }
 
     private func showEmpty() {
+        transition(to: empty)
+    }
+
+    private func transition(to: NSViewController) {
         guard let current = currentViewController else { return }
-        guard current != empty else { return }
-        transition(from: current, to: empty, options: []) {
-            self.currentViewController = self.empty
-            self.empty.view.superview?.fill(subview: self.empty.view)
+        guard to.view.superview != self.view else { return }
+        transition(from: current, to: to, options: []) {
+            self.currentViewController = to
+            to.view.superview?.fill(subview: to.view)
         }
     }
 }
