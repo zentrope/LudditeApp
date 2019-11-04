@@ -17,6 +17,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var mainWindow: MainWC?
     private var database: Database!
 
+
+    @IBAction private func openMainWindow(_ sender: Any) {
+        if mainWindow == nil {
+            mainWindow = MainWC()
+        }
+        mainWindow?.showWindow(self)
+    }
+
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
 
@@ -34,8 +42,44 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         saveAction(nil)
     }
 
-    @objc func terminate(_ sender: Any) {
-        os_log("%{public}s", log: logger, "Terminating")
+    // MARK: - Main Window Events
+
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        return false
+    }
+
+    func applicationDockMenu(_ sender: NSApplication) -> NSMenu? {
+        let menu = NSMenu()
+        let getMainWindow = NSMenuItem(title: "Open Main Window", action: #selector(openMainWindow(_:)), keyEquivalent: "")
+        menu.addItem(getMainWindow)
+        return menu
+    }
+
+    func applicationDidBecomeActive(_ notification: Notification) {
+        // This will make the main window appear if it has been closed
+        // and the user clicks the app icon, or ⌘-Tabs to the app.
+
+        func noVisibleWindows() -> Bool {
+            for w in NSApp.windows {
+                if w.isVisible {
+                    return false
+                }
+            }
+            return true
+        }
+
+        if noVisibleWindows() {
+            openMainWindow(self)
+        }
+    }
+
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        // When the user clicks on the app-icon and there's no window, open a window.
+
+        if !flag {
+            openMainWindow(self)
+        }
+        return true
     }
 
     // MARK: - Core Data stack
