@@ -46,19 +46,16 @@ final class ContainerVC: NSViewController {
         }
 
         if post != nil && currentViewController == empty {
-//            os_log("%{public}s", log: logger, type: .debug, "Post is present, view is empty, so showing editor")
-            showEditor()
+            showPreview()
             return
         }
 
         if post != nil && currentViewController == editor {
-//            os_log("%{public}s", log: logger, type: .debug, "Post and showing editor, so set post in editor")
             editor.setPost(post)
             return
         }
 
         if post != nil && currentViewController == preview {
-//            os_log("%{public}s", log: logger, type: .debug, "post and preview, so load preview")
             preview.load(post?.content)
         }
     }
