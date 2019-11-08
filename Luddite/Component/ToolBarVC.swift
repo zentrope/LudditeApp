@@ -75,7 +75,7 @@ class ToolBarVC: NSViewController { // Should probably be a view controller
         view.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize, weight: .regular)
         view.controlSize = .small
         view.datePickerMode = .single
-        view.datePickerStyle = .textFieldAndStepper
+        view.datePickerStyle = .textField
         view.isBordered = false
         view.drawsBackground = true
         stack.addView(view, in: gravity)

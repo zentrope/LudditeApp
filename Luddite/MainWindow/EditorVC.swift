@@ -59,8 +59,8 @@ extension EditorVC {
         titleField.width(min: 200)
         titleField.delegate = self
 
-        createdLabel.textColor = .controlAccentColor
-        updatedLabel.textColor = .controlAccentColor
+        createdField.textColor = .controlAccentColor
+        updatedField.textColor = .controlAccentColor
         pickerLabel.textColor = .controlAccentColor
 
         picker.dateValue = Date()
@@ -105,7 +105,6 @@ extension EditorVC {
         os_log("%{public}s", log: logger, type: .debug, "View disappeared.")
         Environment.database?.commit()
     }
-
 }
 
 // MARK: - NSTextFieldDelegate (& actions)
@@ -151,11 +150,6 @@ extension EditorVC {
 
 extension EditorVC {
 
-    func setContent(_ content: String) {
-        textView.string = content
-        textView.colorize()
-    }
-
     func setPost(_ post: Post?) {
 
         // A request to set the post to the one we're already editing.
@@ -191,11 +185,11 @@ extension EditorVC {
 
     private func updateMetadata() {
         guard let post = self.post else { return }
+
         titleField.stringValue = post.title ?? ""
-        let formattedCreateDate = post.dateCreated?.formatted(pattern: "MMM dd, yyyy") ?? "..."
-        let formattedUpdateDate = post.dateUpdated?.formatted(pattern: "MMM dd, yyyy @ hh:mm:ss") ?? "..."
-        createdField.stringValue = "\(formattedCreateDate)"
-        updatedField.stringValue = "\(formattedUpdateDate)"
+        createdField.stringValue = post.dateCreated?.formatted(pattern: "MMM dd, yyyy") ?? "..."
+        updatedField.stringValue = post.dateUpdated?.formatted(pattern: "MMM dd, yyyy @ hh:mm:ss") ?? "..."
+
         if let pubDate = post.datePublished {
             picker.dateValue = pubDate
         } else {
