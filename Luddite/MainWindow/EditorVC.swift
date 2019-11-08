@@ -57,6 +57,7 @@ extension EditorVC {
 
         titleField.placeholderString = "Post title"
         titleField.width(min: 200)
+        titleField.delegate = self
 
         createdLabel.textColor = .controlAccentColor
         updatedLabel.textColor = .controlAccentColor
@@ -64,21 +65,21 @@ extension EditorVC {
 
         picker.dateValue = Date()
         picker.datePickerElements = [.yearMonthDay, .hourMinute]
-
-        saveButton.title = "Save"
+        picker.target = self
+        picker.action = #selector(pubDateChanged(_:))
+        picker.toolTip = "Set the post's date as it will appear when published."
 
         let updateBar = ToolBarVC(style: .top)
             .add(field: titleField, in: .leading, spaceAfter: 20)
-            .add(label: createdLabel, in: .leading)
-            .add(label: createdField, in: .leading, spaceAfter: 20)
-            .add(label: updatedLabel, in: .leading)
-            .add(label: updatedField, in: .leading, spaceAfter: 20)
             .add(label: pickerLabel, in: .trailing)
             .add(picker: picker, in: .trailing, spaceAfter: 20)
-            .add(button: saveButton, in: .trailing)
 
         let statusBar = ToolBarVC(style: .bottom)
             .add(label: position, in: .leading)
+            .add(label: createdLabel, in: .center)
+            .add(label: createdField, in: .center, spaceAfter: 20)
+            .add(label: updatedLabel, in: .center)
+            .add(label: updatedField, in: .center)
             .add(label: stats, in: .trailing)
 
         self.view = NSView(frame: .zero)
@@ -103,6 +104,23 @@ extension EditorVC {
         appearanceObservation = nil
         os_log("%{public}s", log: logger, type: .debug, "View disappeared.")
         Environment.database?.commit()
+    }
+
+}
+
+// MARK: - NSTextFieldDelegate (& actions)
+
+extension EditorVC: NSTextFieldDelegate {
+
+    @objc private func pubDateChanged(_ sender: NSDatePicker) {
+        print("picker changed: \(sender.dateValue)")
+        post?.datePublished = sender.dateValue
+    }
+
+    func controlTextDidChange(_ notification: Notification) {
+        if (notification.object as? NSTextField) == titleField {
+            post?.title = titleField.stringValue
+        }
     }
 }
 
@@ -178,6 +196,11 @@ extension EditorVC {
         let formattedUpdateDate = post.dateUpdated?.formatted(pattern: "MMM dd, yyyy @ hh:mm:ss") ?? "..."
         createdField.stringValue = "\(formattedCreateDate)"
         updatedField.stringValue = "\(formattedUpdateDate)"
+        if let pubDate = post.datePublished {
+            picker.dateValue = pubDate
+        } else {
+            picker.dateValue = Date.init(timeIntervalSinceNow: 60 * 60)
+        }
     }
 }
 
