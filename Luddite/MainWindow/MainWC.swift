@@ -62,7 +62,7 @@ class MainWC: NSWindowController {
     }
 
     @objc func previewButtonClicked(_ sender: NSButton) {
-        controller.showPreview()
+        controller.toggleEditor()
     }
 }
 
@@ -109,9 +109,9 @@ extension MainWC: NSToolbarDelegate {
                 item.maxSize = NSMakeSize(32, 25)
                 item.minSize = NSMakeSize(32, 25)
                 item.view = button
-                item.paletteLabel = "Preview"
-                item.label = "Preview"
-                item.toolTip = "Preview"
+                item.paletteLabel = "Editor"
+                item.label = "Editor"
+                item.toolTip = "Show editor"
                 item.target = self
                 item.action = #selector(previewButtonClicked(_:))
                 return item

@@ -38,26 +38,50 @@ class ToolBarVC: NSViewController { // Should probably be a view controller
         fatalError("init(coder:) has not been implemented")
     }
 
-    func add(button view: NSButton, in gravity: NSStackView.Gravity) {
-        conform(view)
+    func space(after view: NSView, value: CGFloat) -> Self {
+        guard value > 0 else { return self }
+        stack.setCustomSpacing(value, after: view)
+        return self
+    }
+
+    @discardableResult
+    func add(button view: NSButton, in gravity: NSStackView.Gravity, spaceAfter value: CGFloat = 0) -> Self {
+        view.bezelStyle = .roundRect
+        view.font = NSFont.systemFont(ofSize: 9, weight: .regular)
+        view.controlSize = .mini
         stack.addView(view, in: gravity)
+        return space(after: view, value: value)
     }
 
-    func add(label view: NSTextField, in gravity: NSStackView.Gravity) {
-        conform(view)
+    @discardableResult
+    func add(label view: NSTextField, in gravity: NSStackView.Gravity, spaceAfter value: CGFloat = 0) -> Self {
+        view.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize, weight: .regular)
+        view.usesSingleLineMode = true
         stack.addView(view, in: gravity)
+        return space(after: view, value: value)
     }
 
-    private func conform(_ button: NSButton) {
-        button.bezelStyle = .roundRect
-        button.font = NSFont.systemFont(ofSize: 9, weight: .regular)
-        button.controlSize = .mini
+    @discardableResult
+    func add(field view: NSTextField, in gravity: NSStackView.Gravity, spaceAfter value: CGFloat = 0) -> Self {
+        view.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize, weight: .regular)
+        view.usesSingleLineMode = true
+        view.isEditable = true
+        stack.addView(view, in: gravity)
+        return space(after: view, value: value)
     }
 
-    func conform(_ label: NSTextField) {
-        label.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize, weight: .regular)
-        label.usesSingleLineMode = true
+    @discardableResult
+    func add(picker view: NSDatePicker, in gravity: NSStackView.Gravity, spaceAfter value: CGFloat = 0) -> Self {
+        view.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize, weight: .regular)
+        view.controlSize = .small
+        view.datePickerMode = .single
+        view.datePickerStyle = .textFieldAndStepper
+        view.isBordered = false
+        view.drawsBackground = true
+        stack.addView(view, in: gravity)
+        return space(after: view, value: value)
     }
+
 }
 
 class ToolBarView: NSView {

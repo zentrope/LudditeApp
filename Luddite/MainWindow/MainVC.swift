@@ -31,13 +31,11 @@ class MainVC: NSViewController {
         splitView.addSplitViewItem(NSSplitViewItem(viewController: container))
     }
 
-    func showPreview() {
-        //container.showEditor()
+    func toggleEditor() {
         container.toggleEditorPreview()
     }
 
     func setPost(_ post: Post?) {
-        //container.post = post
         container.set(post: post)
     }
 }

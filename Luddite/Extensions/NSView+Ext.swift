@@ -111,6 +111,13 @@ extension NSView {
     }
 
     @discardableResult
+    func width(_ value: CGFloat) -> Self  {
+        assert(value > 0)
+        widthAnchor.constraint(equalToConstant: value).isActive = true
+        return self
+    }
+
+    @discardableResult
     func width(min: CGFloat, max: CGFloat = -1) -> Self  {
         assert(min > 0)
         assert(max == -1 || max >= min)
