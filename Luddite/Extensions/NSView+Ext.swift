@@ -72,6 +72,19 @@ extension NSView {
     }
 
     @discardableResult
+    func below(top: NSView, subview: NSView) -> Self {
+        addSubview(subview)
+        subview.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            subview.leadingAnchor.constraint(equalTo: leadingAnchor),
+            subview.trailingAnchor.constraint(equalTo: trailingAnchor),
+            subview.bottomAnchor.constraint(equalTo: bottomAnchor),
+            subview.topAnchor.constraint(equalTo: top.bottomAnchor),
+        ])
+        return self
+    }
+
+    @discardableResult
     func bottom(subview: NSView, withMargins margin: CGFloat = 0) -> Self  {
         addSubview(subview)
         subview.translatesAutoresizingMaskIntoConstraints = false

@@ -8,36 +8,48 @@
 
 import Cocoa
 
-class ToolBarVC: NSViewController { // Should probably be a view controller
+final class ToolBarVC: NSViewController {
 
     enum Style {
         case top, bottom
     }
 
     private let stack = NSStackView()
-    private var style: Style
+    private var style: Style = .top
+
+    convenience init(style: Style) {
+        self.init(nibName: nil, bundle: nil)
+        self.style = style
+    }
 
     override func loadView() {
-        let view = ToolBarView(style: style)
         stack.orientation = .horizontal
         stack.distribution = .gravityAreas
         stack.alignment = .centerY
         stack.edgeInsets = NSEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
 
-        view.fill(subview: stack)
-        view.height(style == .top ? 30 : 24)
-        self.view = view
-    }
+        let line = LineView().height(1)
 
-    init(style: Style) {
-        self.style = style
-        super.init(nibName: nil, bundle: nil)
+        switch style {
+            case .bottom:
+                self.view = BarView()
+                    .top(subview: line)
+                    .below(top: line, subview: stack)
+                    .height(24)
+            case .top:
+                self.view = BarView()
+                    .bottom(subview: line)
+                    .above(bottom: line, subview: stack)
+                    .height(30)
+        }
     }
+}
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+// MARK: - Public API
 
+extension ToolBarVC {
+
+    @discardableResult
     func space(after view: NSView, value: CGFloat) -> Self {
         guard value > 0 else { return self }
         stack.setCustomSpacing(value, after: view)
@@ -81,38 +93,32 @@ class ToolBarVC: NSViewController { // Should probably be a view controller
         stack.addView(view, in: gravity)
         return space(after: view, value: value)
     }
-
 }
 
-class ToolBarView: NSView {
+final private class LineView: NSView {
 
-    private let style: ToolBarVC.Style
-
-    init(style: ToolBarVC.Style) {
-        self.style = style
-        super.init(frame: .zero)
+    var borderColor: NSColor = .gridColor {
+        didSet { needsDisplay = true }
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override var wantsUpdateLayer: Bool {
+        return true
     }
 
-    override func draw(_ dirtyRect: NSRect) {
-        super.draw(dirtyRect)
+    override func updateLayer() {
+        guard let layer = layer else { return }
+        layer.backgroundColor = borderColor.cgColor
+    }
+}
 
-        guard let ctx = NSGraphicsContext.current?.cgContext else { return }
-        layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
+final private class BarView: NSView {
 
-        let y = style == .top ? bounds.minY : bounds.maxY
-        let start = CGPoint(x: bounds.minX, y: y)
-        let end = CGPoint(x: bounds.maxX, y: y)
-
-        ctx.beginPath()
-        ctx.move(to: start)
-        ctx.addLine(to: end)
-        ctx.setLineWidth(1)
-        ctx.setStrokeColor(NSColor.gridColor.cgColor)
-        ctx.strokePath()
+    override var wantsUpdateLayer: Bool {
+        return true
     }
 
+    override func updateLayer() {
+        guard let layer = layer else { return }
+        layer.backgroundColor = NSColor.controlBackgroundColor.cgColor
+    }
 }
