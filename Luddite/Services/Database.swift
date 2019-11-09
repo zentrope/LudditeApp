@@ -31,6 +31,8 @@ class Database {
             let post = Post(context: context)
             post.id = UUID()
             post.dateCreated = Date()
+            post.datePublished = post.dateCreated
+            post.dateUpdated = post.dateCreated
             post.title = title
             post.content = "<h1>\(title)</h1>\n\n<p>When you're thinking about '\(title)' the other day...</p>"
             post.isDraft = true

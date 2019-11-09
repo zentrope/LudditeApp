@@ -256,6 +256,17 @@ extension EditorVC {
             }
         }
     }
+
+    private func updatePost() {
+        post?.content = textView.string
+        post?.dateUpdated = Date()
+        if post?.datePublished == nil {
+            post?.datePublished = post?.dateCreated
+        }
+        if post?.isDraft == nil {
+            post?.isDraft = true
+        }
+    }
 }
 
 // MARK: - NSTextStorageDelegate (unused)
@@ -273,11 +284,7 @@ extension EditorVC: NSTextStorageDelegate {
 extension EditorVC: NSTextViewDelegate {
 
     func textDidEndEditing(_ notification: Notification) {
-        post?.content = textView.string
-        post?.dateUpdated = Date()
-        if post?.isDraft == nil {
-            post?.isDraft = true
-        }
+        updatePost()
         Environment.database?.commit()
     }
 
@@ -288,8 +295,7 @@ extension EditorVC: NSTextViewDelegate {
     }
 
     func textDidChange(_ notification: Notification) {
-        post?.content = textView.string
-        post?.dateUpdated = Date()
+        updatePost()
         setStats()
 
         guard let container = textView.textContainer else { return }
