@@ -12,13 +12,18 @@ extension NSView {
 
     @discardableResult
     func fill(subview: NSView, withMargins margin: CGFloat = 0) -> Self {
+        return fill(subview: subview, top: margin, leading: margin, bottom: -margin, trailing: -margin)
+    }
+
+    @discardableResult
+    func fill(subview: NSView, top: CGFloat = 0, leading: CGFloat = 0, bottom: CGFloat = 0, trailing: CGFloat = 0) -> Self {
         addSubview(subview)
         subview.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            subview.topAnchor.constraint(equalTo: topAnchor, constant: margin),
-            subview.leadingAnchor.constraint(equalTo: leadingAnchor, constant: margin),
-            subview.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -margin),
-            subview.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin),
+            subview.topAnchor.constraint(equalTo: topAnchor, constant: top),
+            subview.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leading),
+            subview.trailingAnchor.constraint(equalTo: trailingAnchor, constant: trailing),
+            subview.bottomAnchor.constraint(equalTo: bottomAnchor, constant: bottom),
         ])
         return self
     }
@@ -145,7 +150,7 @@ extension NSView {
     func borderize(_ color: NSColor = .systemRed) -> Self {
         wantsLayer = true
         layer?.borderColor = color.cgColor
-        layer?.borderWidth = 1
+        layer?.borderWidth = 0.5
         return self
     }
 }

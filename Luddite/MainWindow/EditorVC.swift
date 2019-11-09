@@ -21,25 +21,24 @@ class EditingTextView: NSTextView {
 
 class EditorVC: NSViewController {
 
-    private let textView = EditingTextView()
-    private let scrollView = NSScrollView()
-
+    // Top
     private let titleField = NSTextField(wrappingLabelWithString: "")
-    private let createdField = NSTextField(labelWithString: "Date Created")
-    private let createdLabel = NSTextField(labelWithString: "Created:")
-    private let updatedField = NSTextField(labelWithString: "Date Updated")
-    private let updatedLabel = NSTextField(labelWithString: "Updated:")
-
-    private let saveButton = NSButton()
-
+    private let draftCheck = NSButton()
+    private let draftLabel = NSTextField(labelWithString: " Draft?")
     private let pickerLabel = NSTextField(labelWithString: "Post date:")
     private let picker = NSDatePicker()
 
-    private let newButton = NSButton()
-    private let previewButton = NSButton()
+    // Middle
+    private let textView = EditingTextView()
+    private let scrollView = NSScrollView()
 
-    private let position = NSTextField(wrappingLabelWithString: "...")
-    private let stats = NSTextField(wrappingLabelWithString: "...")
+    // Bottom
+    private let createdField = NSTextField(labelWithString: "Date Created")
+    private let createdLabel = NSTextField(labelWithString: "Created: ")
+    private let updatedField = NSTextField(labelWithString: "…")
+    private let updatedLabel = NSTextField(labelWithString: "Updated: ")
+    private let position = NSTextField(wrappingLabelWithString: "…")
+    private let stats = NSTextField(wrappingLabelWithString: "…")
 
     private var previousContentLength = -1
     private var appearanceObservation: NSKeyValueObservation?
@@ -55,22 +54,29 @@ extension EditorVC {
 
         setupTextView()
 
+        draftCheck.setButtonType(.switch)
+        draftCheck.imagePosition = .imageOnly
+        draftCheck.target = self
+        draftCheck.action = #selector(draftStatusChanged(_:))
+
         titleField.placeholderString = "Post title"
         titleField.width(min: 200)
         titleField.delegate = self
 
+        draftLabel.textColor = .controlAccentColor
         createdField.textColor = .controlAccentColor
         updatedField.textColor = .controlAccentColor
         pickerLabel.textColor = .controlAccentColor
 
         picker.dateValue = Date()
-        picker.datePickerElements = [.yearMonthDay, .hourMinute]
         picker.target = self
         picker.action = #selector(pubDateChanged(_:))
         picker.toolTip = "Set the post's date as it will appear when published."
 
         let updateBar = ToolBarVC(style: .top)
             .add(field: titleField, in: .leading, spaceAfter: 20)
+            .add(button: draftCheck, in: .leading, spaceAfter: 4)
+            .add(label: draftLabel, in: .trailing, spaceAfter: 20)
             .add(label: pickerLabel, in: .trailing)
             .add(picker: picker, in: .trailing, spaceAfter: 20)
 
@@ -110,6 +116,10 @@ extension EditorVC {
 // MARK: - NSTextFieldDelegate (& actions)
 
 extension EditorVC: NSTextFieldDelegate {
+
+    @objc private func draftStatusChanged(_ sender: NSButton) {
+        post?.isDraft = sender.state == .on
+    }
 
     @objc private func pubDateChanged(_ sender: NSDatePicker) {
         print("picker changed: \(sender.dateValue)")
@@ -189,6 +199,7 @@ extension EditorVC {
         titleField.stringValue = post.title ?? ""
         createdField.stringValue = post.dateCreated?.formatted(pattern: "MMM dd, yyyy") ?? "..."
         updatedField.stringValue = post.dateUpdated?.formatted(pattern: "MMM dd, yyyy @ hh:mm:ss") ?? "..."
+        draftCheck.state = post.isDraft ? .on : .off
 
         if let pubDate = post.datePublished {
             picker.dateValue = pubDate
