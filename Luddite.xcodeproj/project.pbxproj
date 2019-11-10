@@ -25,6 +25,7 @@
 		536D98A62364236B0004AE3F /* SidebarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D98A52364236B0004AE3F /* SidebarVC.swift */; };
 		5370EF06236E5352003C1582 /* Post+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5370EF05236E5352003C1582 /* Post+Ext.swift */; };
 		5370EF08236E9FF1003C1582 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5370EF07236E9FF1003C1582 /* Date+Ext.swift */; };
+		537E545723779C35001F2100 /* NSWindow+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537E545623779C35001F2100 /* NSWindow+Ext.swift */; };
 		5383BA522362C49F00391ECC /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5383BA512362C49F00391ECC /* CloudKit.framework */; };
 		53ED126123656FA100A807E5 /* EmptyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53ED126023656FA100A807E5 /* EmptyVC.swift */; };
 		53ED12632365720000A807E5 /* NSTextField+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53ED12622365720000A807E5 /* NSTextField+Ext.swift */; };
@@ -55,6 +56,7 @@
 		536D98A52364236B0004AE3F /* SidebarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarVC.swift; sourceTree = "<group>"; };
 		5370EF05236E5352003C1582 /* Post+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Post+Ext.swift"; sourceTree = "<group>"; };
 		5370EF07236E9FF1003C1582 /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
+		537E545623779C35001F2100 /* NSWindow+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSWindow+Ext.swift"; sourceTree = "<group>"; };
 		5383BA512362C49F00391ECC /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		53ED126023656FA100A807E5 /* EmptyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyVC.swift; sourceTree = "<group>"; };
 		53ED12622365720000A807E5 /* NSTextField+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+Ext.swift"; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 				53ED12622365720000A807E5 /* NSTextField+Ext.swift */,
 				536732CC235AF3B5009D50E4 /* NSTextView+Ext.swift */,
 				5319B6772359746200B62E2C /* NSView+Ext.swift */,
+				537E545623779C35001F2100 /* NSWindow+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 				53ED126123656FA100A807E5 /* EmptyVC.swift in Sources */,
 				536D98A62364236B0004AE3F /* SidebarVC.swift in Sources */,
 				5319B6632359727500B62E2C /* Luddite.xcdatamodeld in Sources */,
+				537E545723779C35001F2100 /* NSWindow+Ext.swift in Sources */,
 				536D98A223641E4D0004AE3F /* Environment.swift in Sources */,
 				531CCF182364C6E2005B7126 /* EditorVC.swift in Sources */,
 				5370EF08236E9FF1003C1582 /* Date+Ext.swift in Sources */,

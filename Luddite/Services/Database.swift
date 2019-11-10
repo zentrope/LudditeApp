@@ -40,6 +40,14 @@ class Database {
         }
     }
 
+    func delete(post: Post) {
+        let context = app.persistentContainer.viewContext
+        context.perform {
+            context.delete(post)
+            self.app.saveAction(self)
+        }
+    }
+
     func getPostController() -> NSFetchedResultsController<Post> {
         let context = app.persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<Post> = Post.fetchRequest()

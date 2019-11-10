@@ -63,6 +63,10 @@ class SidebarVC: NSViewController {
         outlineView.gridStyleMask = []
         outlineView.autoresizesOutlineColumn = false
 
+        let menu = NSMenu()
+        menu.delegate = self
+        outlineView.menu = menu
+
         scrollView.documentView = outlineView
         scrollView.hasVerticalScroller = true
         scrollView.borderType = .noBorder
@@ -174,6 +178,39 @@ extension SidebarVC: NSOutlineViewDelegate {
             default:
                 return nil
         }
+    }
+}
+
+// MARK: - NSMenuDelegate
+
+extension SidebarVC: NSMenuDelegate {
+
+    private func getClickedPost() -> Post? {
+        return outlineView.item(atRow: outlineView.clickedRow) as? Post
+    }
+
+    @objc private func deletePost(_ sender: NSMenuItem) {
+        guard let post = getClickedPost() else { return }
+        let title = "Delete '\(post.title ?? "untitled")'?"
+        let info = "Deleting a post cannot be undone."
+        self.view.window?.confirm(title: title, info: info, yes: "Delete Post", no: "Cancel", { yes in
+            if yes {
+                Environment.database?.delete(post: post)
+            }
+        })
+    }
+
+    @objc private func togglePostStatus(_ sender: NSMenuItem) {
+        guard let post = getClickedPost() else { return }
+        post.isDraft.toggle()
+    }
+
+    func menuWillOpen(_ menu: NSMenu) {
+        menu.removeAllItems()
+        guard let post = getClickedPost() else { return }
+        let markText = post.isDraft ? "Mark for publication" : "Mark as draft"
+        menu.addItem(withTitle: markText, action: #selector(togglePostStatus(_:)), keyEquivalent: "")
+        menu.addItem(withTitle: "Delete", action: #selector(deletePost(_:)), keyEquivalent: "")
     }
 }
 
