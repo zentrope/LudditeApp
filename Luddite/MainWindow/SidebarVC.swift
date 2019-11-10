@@ -158,18 +158,19 @@ extension SidebarVC: NSOutlineViewDelegate {
         switch item {
             case let header as Outline.Header:
                 let id = NSUserInterfaceItemIdentifier("HeaderCell")
-                if let cell = outlineView.makeView(withIdentifier: id, owner: self) as? HeadCell {
-                    cell.textField?.stringValue = header.name
-                    return cell
-                }
-                return HeadCell(identifier: id, stringValue: header.name)
+                let reuse = outlineView.makeView(withIdentifier: id, owner: self) as? HeadCell
+                let cell = reuse == nil ? HeadCell(identifier: id) : reuse!
+                cell.textField?.stringValue = header.name
+                return cell
+
             case let post as Post:
                 let id = NSUserInterfaceItemIdentifier("BodyCell")
-                if let cell = outlineView.makeView(withIdentifier: id, owner: self) as? BodyCell {
-                    cell.textField?.stringValue = post.title ?? "untitled"
-                    return cell
-                }
-                return BodyCell(identifier: id, stringValue: post.title ?? "untitled")
+                let reuse = outlineView.makeView(withIdentifier: id, owner: self) as? BodyCell
+                let cell = reuse == nil ? BodyCell(identifier: id) : reuse!
+                cell.stringValue = post.title ?? "untitled"
+                cell.isDraft = post.isDraft
+                return cell
+
             default:
                 return nil
         }
@@ -228,10 +229,9 @@ fileprivate final class HeadCell: NSTableCellView {
 
     private let label = NSTextField(labelWithString: "Header")
 
-    convenience init(identifier: NSUserInterfaceItemIdentifier, stringValue: String = "") {
+    convenience init(identifier: NSUserInterfaceItemIdentifier) {
         self.init(frame: .zero)
         self.identifier = identifier
-        label.stringValue = stringValue
         self.textField = label
         horizontal(subview: label, leading: 4, trailing: -4)
     }
@@ -239,13 +239,52 @@ fileprivate final class HeadCell: NSTableCellView {
 
 fileprivate final class BodyCell: NSTableCellView {
 
-    private let label = NSTextField(labelWithString: "Body")
+    private let label = NSTextField(labelWithString: "untitled")
+    private let glyph = NSTextField(labelWithString: "🄳")
 
-    convenience init(identifier: NSUserInterfaceItemIdentifier, stringValue: String = "") {
+    var stringValue: String = "" {
+        didSet {
+            label.stringValue = stringValue
+        }
+    }
+
+    var isDraft: Bool = true {
+        didSet {
+            glyph.stringValue = isDraft ? "🄳" : "🄿"
+            glyph.textColor = isDraft ? .systemGray : .systemPurple
+        }
+    }
+
+    convenience init(identifier: NSUserInterfaceItemIdentifier) {
         self.init(frame: .zero)
         self.identifier = identifier
-        label.stringValue = stringValue
-        self.textField = label
-        horizontal(subview: label, leading: 4, trailing: -4)
+
+        glyph.font = .systemFont(ofSize: 17)
+        glyph.width(15)
+
+        let stack = NSStackView()
+        stack.spacing = 4
+        stack.edgeInsets = NSEdgeInsetsMake(0, 0, 0, 0)
+        stack.orientation = .horizontal
+        stack.distribution = .gravityAreas
+        stack.alignment = .centerY
+        stack.addView(glyph, in: .leading)
+        stack.addView(label, in: .leading)
+
+        horizontal(subview: stack, leading: 0, trailing: -4)
+    }
+
+    private func setGlyphColor() {
+        if backgroundStyle == .dark {
+            glyph.textColor = .controlTextColor
+        } else {
+            glyph.textColor = isDraft ? .systemGray : .controlAccentColor
+        }
+    }
+
+    override var backgroundStyle: NSView.BackgroundStyle {
+        didSet {
+            setGlyphColor()
+        }
     }
 }
