@@ -12,6 +12,7 @@ extension NSImage {
 
     static let addButtonImage = NSImage(named: "plus")!
     static let previewButtonImage = NSImage(named: "eye")!
+    static let publishButtonImage = NSImage(named: "star.circle.fill")!
 
     func scaled(toHeight height: CGFloat) -> NSImage {
         let width = height / self.size.height * self.size.width

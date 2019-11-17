@@ -18,6 +18,7 @@ class MainWC: NSWindowController {
     private let saveName = "LudditeMainWindow"
     private let newPostItem = NSToolbarItem.Identifier("newPostItem")
     private let previewPostItem = NSToolbarItem.Identifier("previewPostItem")
+    private let publishSiteItem = NSToolbarItem.Identifier("publishSiteItem")
 
     private var controller: MainVC!
 
@@ -52,8 +53,10 @@ class MainWC: NSWindowController {
         toolbar.autosavesConfiguration = true
         toolbar.insertItem(withItemIdentifier: .toggleSidebar, at: 0)
         toolbar.insertItem(withItemIdentifier: .flexibleSpace, at: 1)
-        toolbar.insertItem(withItemIdentifier: newPostItem, at: 2)
-        toolbar.insertItem(withItemIdentifier: previewPostItem, at: 3)
+        toolbar.insertItem(withItemIdentifier: publishSiteItem, at: 2)
+        toolbar.insertItem(withItemIdentifier: .space, at: 3)
+        toolbar.insertItem(withItemIdentifier: newPostItem, at: 4)
+        toolbar.insertItem(withItemIdentifier: previewPostItem, at: 5)
         toolbar.delegate = self
     }
 
@@ -64,16 +67,20 @@ class MainWC: NSWindowController {
     @objc func previewButtonClicked(_ sender: NSButton) {
         controller.toggleEditor()
     }
+
+    @objc func publishSiteButtonClicked(_ sender: NSButton) {
+        window?.alert(message: "Not implemented.")
+    }
 }
 
 extension MainWC: NSToolbarDelegate {
 
     func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-        return [.toggleSidebar, .flexibleSpace, newPostItem, previewPostItem]
+        return [.toggleSidebar, .flexibleSpace, publishSiteItem, .space, newPostItem, previewPostItem]
     }
 
     func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-        return [.toggleSidebar, .space, .flexibleSpace, newPostItem, previewPostItem]
+        return [.toggleSidebar, .space, .flexibleSpace, publishSiteItem, newPostItem, previewPostItem]
     }
 
     func toolbarSelectableItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
@@ -114,6 +121,22 @@ extension MainWC: NSToolbarDelegate {
                 item.toolTip = "Show editor"
                 item.target = self
                 item.action = #selector(previewButtonClicked(_:))
+                return item
+            case publishSiteItem:
+                let item = NSToolbarItem(itemIdentifier: publishSiteItem)
+                let button = NSButton()
+                button.bezelStyle = .texturedRounded
+                button.image = NSImage.publishButtonImage.scaled(toHeight: 16)
+                button.image?.isTemplate = true
+                button.imageScaling = .scaleProportionallyDown
+                item.maxSize = NSMakeSize(32, 25)
+                item.minSize = NSMakeSize(32, 25)
+                item.view = button
+                item.paletteLabel = "Publish Site"
+                item.label = "Publish"
+                item.toolTip = "Publish Site"
+                item.target = self
+                item.action = #selector(publishSiteButtonClicked(_:))
                 return item
             default:
                 return nil

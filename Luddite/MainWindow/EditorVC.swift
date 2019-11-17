@@ -25,7 +25,7 @@ class EditorVC: NSViewController {
     private let titleField = NSTextField(wrappingLabelWithString: "")
     private let draftCheck = NSButton()
     private let draftLabel = NSTextField(labelWithString: " Draft?")
-    private let pickerLabel = NSTextField(labelWithString: "Post date:")
+    private let pickerLabel = NSTextField(labelWithString: "Posted:")
     private let picker = NSDatePicker()
 
     // Middle
@@ -74,6 +74,7 @@ extension EditorVC {
         picker.toolTip = "Set the post's date as it will appear when published."
 
         let updateBar = ToolBarVC(style: .top)
+            // .setSize(.regular)
             .add(field: titleField, in: .leading, spaceAfter: 20)
             .add(button: draftCheck, in: .leading, spaceAfter: 4)
             .add(label: draftLabel, in: .trailing, spaceAfter: 20)
@@ -88,6 +89,7 @@ extension EditorVC {
             .add(label: updatedField, in: .center)
             .add(label: stats, in: .trailing)
 
+        titleField.font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
         self.view = NSView(frame: .zero)
             .top(subview: updateBar.view)
             .bottom(subview: statusBar.view)
@@ -119,16 +121,18 @@ extension EditorVC: NSTextFieldDelegate {
 
     @objc private func draftStatusChanged(_ sender: NSButton) {
         post?.isDraft = sender.state == .on
+        post?.dateUpdated = Date()
     }
 
     @objc private func pubDateChanged(_ sender: NSDatePicker) {
-        print("picker changed: \(sender.dateValue)")
         post?.datePublished = sender.dateValue
+        post?.dateUpdated = Date()
     }
 
     func controlTextDidChange(_ notification: Notification) {
         if (notification.object as? NSTextField) == titleField {
             post?.title = titleField.stringValue
+            post?.dateUpdated = Date()
         }
     }
 }
