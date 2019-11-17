@@ -1,5 +1,5 @@
 //
-//  Preference.swift
+//  Preferences.swift
 //  Luddite
 //
 //  Created by Keith Irwin on 11/16/19.
@@ -11,6 +11,7 @@ import Foundation
 enum Preferences {
     @Preference("use.titles.on.index", default: false) static var isIndexTitled
     @Preference("use.titles.on.pages", default: false) static var isPagesTitled
+    @Preference("site.title", default: "Luddite App Site") static var siteTitle
 }
 
 @propertyWrapper

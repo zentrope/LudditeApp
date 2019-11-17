@@ -23,7 +23,8 @@
 		536D98A223641E4D0004AE3F /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D98A023641E4D0004AE3F /* Environment.swift */; };
 		536D98A323641E4D0004AE3F /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D98A123641E4D0004AE3F /* Database.swift */; };
 		536D98A62364236B0004AE3F /* SidebarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D98A52364236B0004AE3F /* SidebarVC.swift */; };
-		5370DFB123811F33001E2E13 /* Preference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5370DFB023811F33001E2E13 /* Preference.swift */; };
+		5370DFB123811F33001E2E13 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5370DFB023811F33001E2E13 /* Preferences.swift */; };
+		5370DFB32381286C001E2E13 /* SiteGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5370DFB22381286C001E2E13 /* SiteGenerator.swift */; };
 		5370EF06236E5352003C1582 /* Post+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5370EF05236E5352003C1582 /* Post+Ext.swift */; };
 		5370EF08236E9FF1003C1582 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5370EF07236E9FF1003C1582 /* Date+Ext.swift */; };
 		537E545723779C35001F2100 /* NSWindow+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537E545623779C35001F2100 /* NSWindow+Ext.swift */; };
@@ -55,7 +56,8 @@
 		536D98A023641E4D0004AE3F /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		536D98A123641E4D0004AE3F /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		536D98A52364236B0004AE3F /* SidebarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarVC.swift; sourceTree = "<group>"; };
-		5370DFB023811F33001E2E13 /* Preference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preference.swift; sourceTree = "<group>"; };
+		5370DFB023811F33001E2E13 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		5370DFB22381286C001E2E13 /* SiteGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteGenerator.swift; sourceTree = "<group>"; };
 		5370EF05236E5352003C1582 /* Post+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Post+Ext.swift"; sourceTree = "<group>"; };
 		5370EF07236E9FF1003C1582 /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		537E545623779C35001F2100 /* NSWindow+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSWindow+Ext.swift"; sourceTree = "<group>"; };
@@ -149,7 +151,8 @@
 				536D98A123641E4D0004AE3F /* Database.swift */,
 				536D98A023641E4D0004AE3F /* Environment.swift */,
 				5370EF05236E5352003C1582 /* Post+Ext.swift */,
-				5370DFB023811F33001E2E13 /* Preference.swift */,
+				5370DFB023811F33001E2E13 /* Preferences.swift */,
+				5370DFB22381286C001E2E13 /* SiteGenerator.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -257,6 +260,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5370DFB32381286C001E2E13 /* SiteGenerator.swift in Sources */,
 				5319B67F2359884000B62E2C /* NSColor+Ext.swift in Sources */,
 				5370EF06236E5352003C1582 /* Post+Ext.swift in Sources */,
 				536D98A323641E4D0004AE3F /* Database.swift in Sources */,
@@ -273,7 +277,7 @@
 				53ED126A23658B1200A807E5 /* ContainerVC.swift in Sources */,
 				53ED126123656FA100A807E5 /* EmptyVC.swift in Sources */,
 				536D98A62364236B0004AE3F /* SidebarVC.swift in Sources */,
-				5370DFB123811F33001E2E13 /* Preference.swift in Sources */,
+				5370DFB123811F33001E2E13 /* Preferences.swift in Sources */,
 				5319B6632359727500B62E2C /* Luddite.xcdatamodeld in Sources */,
 				537E545723779C35001F2100 /* NSWindow+Ext.swift in Sources */,
 				536D98A223641E4D0004AE3F /* Environment.swift in Sources */,

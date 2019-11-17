@@ -69,7 +69,7 @@ class MainWC: NSWindowController {
     }
 
     @objc func publishSiteButtonClicked(_ sender: NSButton) {
-        window?.alert(message: "Not implemented.")
+        SiteGenerator.execute(window: window)
     }
 }
 
